@@ -1,0 +1,21 @@
+# Editar cron
+sudo crontab -e
+
+# (Agregar las 2 tareas de actualización y reinicio)
+0 23 * * * dnf -y update
+0 3 * * 0 /sbin/reboot
+
+# Servicio at
+sudo systemctl enable --now atd
+
+# Ver contenido antes
+ls /tmp
+
+# Programar eliminación
+echo "rm -rf /tmp/*" | at now + 1 minute
+
+# Verificar tarea
+atq
+
+# Ver contenido después
+ls /tmp
