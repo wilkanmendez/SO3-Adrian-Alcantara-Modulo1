@@ -1,21 +1,32 @@
-# Editar cron
-sudo crontab -e
+# Obtener nombre de interfaz
+nmcli device status
 
-# (Agregar las 2 tareas de actualización y reinicio)
-0 23 * * * dnf -y update
-0 3 * * 0 /sbin/reboot
+# USar DHCP
+sudo nmcli con mod enp0s3 ipv4.method auto
+sudo nmcli con up enp0s3
 
-# Servicio at
-sudo systemctl enable --now atd
+# Usar IP estática
+sudo nmcli con mod enp0s3 ipv4.method manual
+sudo nmcli con mod enp0s3 ipv4.addresses 192.168.100.25/24
+sudo nmcli con mod enp0s3 ipv4.gateway 192.168.100.1
+sudo nmcli con mod enp0s3 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con up enp0s3
 
-# Ver contenido antes
-ls /tmp
+# Configuración gráfica vía TUI
+sudo nmtui
 
-# Programar eliminación
-echo "rm -rf /tmp/*" | at now + 1 minute
+# Configuración rápida sin NetworkManager de manera temporal
+sudo ip addr add 192.168.1.150/24 dev enp0s3
+sudo ip route add default via 192.168.1.1
 
-# Verificar tarea
-atq
+# Para volver a DHCP
+sudo dhclient -v enp0s3
 
-# Ver contenido después
-ls /tmp
+# Configurar DNS con nmcli
+sudo nmcli con mod enp0s3 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con up enp0s3
+
+# Para editar de manera temporal
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
