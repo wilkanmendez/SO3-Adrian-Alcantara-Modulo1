@@ -1,1 +1,31 @@
+# Crear usuario
+sudo useradd adrian
 
+# Establecer contraseña
+sudo passwd adrian
+
+# Agregarlo al grupo wheel (sudoers en RHEL)
+sudo usermod -aG wheel adrian
+# Verificar
+groups adrian
+
+# Crear grupo
+sudo groupadd guest
+
+# Crear usuario y agregarlo al grupo guest
+sudo useradd -G guest invitado
+sudo passwd invitado
+# Verificar
+id invitado
+
+# Eliminar usuario invitado junto con su carpeta personal
+sudo userdel -r invitado
+
+# Eliminar grupo guest
+sudo groupdel guest
+
+# Para comprobar
+cat /etc/passwd | grep adrian
+cat /etc/group | grep guest
+su - adrian
+sudo ls /root
