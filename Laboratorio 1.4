@@ -1,0 +1,27 @@
+# Crear la carpeta y el archivo
+mkdir materia
+cd materia
+vi estudiante.txt
+
+# Darle permisos a el archivo al propietario
+chmod 770 estudiante.txt
+# Verifica
+ls -l estudiante.txt
+
+# Crear carpeta y copiar el archivo
+cd ..
+mkdir materia2
+cp materia/estudiante.txt materia2/
+# Verificar
+ls materia2
+
+# Eliminar la carpeta materia y su archivo
+rm -rf materia
+# Verificar
+ls
+
+# Revisar permisos
+ls -l materia2/estudiante.txt
+
+# Comprobar el contenido
+cat materia2/estudiante.txt
